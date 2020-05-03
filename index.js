@@ -4,7 +4,7 @@
 console.log('hello world');
 
 //you can throw random values in the code, it does not break the compiler.
-"a string" ;
+"a string";
 2321;
 
 // define var using = sign 
@@ -30,11 +30,13 @@ console.log(870 === 875);
 console.log('red' === 'red');
 console.log('red' === 'yellow');
 
-// if statements
+// variables
 
 var a = 45;
 var b = 45;
 var c = 15
+
+// if statements
 
 if (b === a) {
 console.log('I am equal');
@@ -43,5 +45,30 @@ if (c < a) {
 console.log('I am smaller');
 }
 
-// while statements
+// while loops
 
+while (c < a) {
+  console.log (c);
+  if (c === a - 1) {
+    console.log ("Almost there!")
+  }
+  c += 1;
+}
+console.log(c);
+console.log("Finish!")
+
+// for loops
+
+// for (c)
+
+
+// functions
+
+function add (num1, num2) {
+return num1 +  num2;
+}
+
+// calling functions
+
+var total = "Your total is: " + add(b, c);
+console.log(total);

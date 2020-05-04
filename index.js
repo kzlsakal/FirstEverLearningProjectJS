@@ -1,5 +1,9 @@
 // comment
 
+/* multi-line
+   comment
+*/
+
 // this is the same as print
 console.log('hello world');
 
@@ -55,7 +59,7 @@ while (c < a) {
   c += 1;
 }
 console.log(c);
-console.log("Finish!")
+console.log("Finish!");
 
 // for loops
 
@@ -72,3 +76,49 @@ return num1 +  num2;
 
 var total = "Your total is: " + add(b, c);
 console.log(total);
+
+// numbers
+// integer, float and max
+
+var max1 = +Infinity;
+var max2 = -Infinity;
+
+console.log(max1);
+console.log(max2);
+
+// modulo
+
+var numToMod = 5;
+var mod1 = 2
+console.log(numToMod % mod1); // should return the remainder 1
+
+// strings
+
+var string1 = 'Hooray!';
+
+var firstChar1 = string1[0]; // will return the first character
+var thirdChar1 = string1[3]; // will return the fourth character
+
+console.log(firstChar1 + thirdChar1); // will return Hr
+console.log(firstChar1, thirdChar1); // will separate them by space and return H r
+
+function returnString(string, index) {
+  return string[index];
+}
+
+var stringChop = returnString(string1, 4);
+console.log(stringChop);
+
+// arrays
+var array1 = ['some string', 'some other string', 'and another string'];
+console.log(array1[2]);
+
+// dictionaries
+
+var dict1 = {
+  'first': 'first string',
+  'second': 'second string',
+  'third': 'third string'
+}
+
+console.log(dict1['second']);

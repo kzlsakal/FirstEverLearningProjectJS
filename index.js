@@ -45,9 +45,13 @@ var c = 15
 if (b === a) {
 console.log('I am equal');
 }
-if (c < a) {
+if (c > a) {
+console.log('I am bigger');
+}
+else if (c < a) {
 console.log('I am smaller');
 }
+
 
 // while loops
 
@@ -113,7 +117,7 @@ console.log(stringChop);
 var array1 = ['some string', 'some other string', 'and another string'];
 console.log(array1[2]);
 
-// dictionaries
+// ocjects - dictionaries
 
 var dict1 = {
   'first': 'first string',
@@ -122,3 +126,42 @@ var dict1 = {
 }
 
 console.log(dict1['second']);
+console.log(dict1.third);
+
+// objects with functions
+
+function returnValue(object, key){
+  return object[key]; // this has to be bracket type because .key will look for the 'key entry' instead of calling the variable
+}
+var key1 = 'first';
+var value1 = returnValue(dict1, key1);
+console.log(value1);
+
+// typeof operator
+console.log(typeof dict1.first);
+console.log(typeof array1); // use Array.isArray() below for specification
+console.log(typeof dict1); 
+console.log(typeof max1);
+console.log (typeof a);
+
+// Array.isArray() function
+console.log(Array.isArray(array1)); 
+console.log(Array.isArray(dict1)); // false because this is an object
+
+function determineIsAnArray(input) {
+ if (Array.isArray(input)){
+     return true;
+ }
+ else {
+     return false;
+ }
+}
+
+console.log(determineIsAnArray(array1));
+console.log(determineIsAnArray(dict1));
+
+function determineIsAnArray2(input){ // shorter way to get this return/false
+  return Array.isArray(input);
+}
+
+console.log(determineIsAnArray(dict1));

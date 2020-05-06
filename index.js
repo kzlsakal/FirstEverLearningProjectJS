@@ -5,7 +5,8 @@
 */
 
 // this is the same as print
-console.log('hello world');
+console.log('hello world'); // this is the way
+console.log("\n~~BASIC MATH AND EQUATIONS~~");
 
 //you can throw random values in the code, it does not break the compiler.
 "a string";
@@ -39,7 +40,8 @@ console.log("is 'red' equal to 'yellow':", 'red' === 'yellow');
 
 var a = 45;
 var b = 45;
-var c = 15
+var c = 15;
+var d = 2
 
 // if statements
 
@@ -54,23 +56,7 @@ console.log(c, 'is smaller than', a);
 }
 
 
-// while loops
-console.log("Well, let's make them equal!");
-while (c < a) {
-  console.log (c);
-  if (c === a - 1) {
-    console.log ("Almost there!")
-  }
-  c += 1;
-}
-console.log(c);
-console.log("Finish!");
-
-// for loops
-
-// for (c)
-
-
+console.log("\n~~WORKING WITH NUMBERS~~");
 // functions
 
 function add (num1, num2) {
@@ -215,6 +201,7 @@ numFloat = applyParseFloat(stringToNum2);
 console.log(stringToNum2, "is now a", typeof numFloat, "under nother variable:", numFloat);
 
 // converting another type of variable to a string
+console.log("\n~~WORKING WITH STRINGS~~");
 
 numToString = 555;
 numToString.toString();
@@ -293,6 +280,8 @@ else {
 }
 
 // arrays
+console.log("\n~~WORKING WITH ARRAYS~~");
+
 var array1 = ['some string', 'some other string', 'and another string'];
 console.log("We have a new array:", array1);
 console.log("This is its 2nd item:", array1[1]);
@@ -367,6 +356,7 @@ console.log("Well, it also split into pieces:", arrayFromString2);
 
 
 // ocjects - dictionaries
+console.log("\n~~WORKING WITH OBJECTS~~");
 
 var dict1 = {
   'first': 'this is the first string',
@@ -386,6 +376,31 @@ var key1 = 'first';
 var value1 = returnValue(dict1, key1);
 console.log(value1);
 
+// we check the presence of a searched key by getting a true/false from matching it with undefined
+var key2 = "third";
+function isPropertyPresent(object, key) {
+    var isPresent = object[key] !== undefined;
+    return isPresent;
+}
+
+console.log("Is property", "'"+key1+"'", "present in our object?", isPropertyPresent(dict1, key2));
+  
+// convert the keys of an object to an array with Object.keys() method
+
+var keys1 = Object.keys(dict1);
+console.log("Here is a list of our keys:", keys1);
+
+// convert the values of an object to an array with Object.values() method
+
+var values1 = Object.values(dict1);
+console.log("Here is a list of our values:", values1);
+
+// removing an item from an object with delete
+delete dict1["second"];
+console.log("This is what's left after removing the second item:", dict1);
+
+
+console.log("\n~~UNDERSTANDING THE TYPE OF A VARIABLE~~");
 // typeof operator
 console.log("Type of the first entry of the object is:", typeof dict1.first);
 console.log("Type of our previous list (array) is:", typeof array1); // use Array.isArray() below for specification
@@ -412,3 +427,134 @@ function determineIsAnArray2(input){ // shorter way to get this return/false
   return Array.isArray(input);
 }
 console.log("Are you able to do that with a shorter code?", !determineIsAnArray(dict1)); // !something brings the opposite of something
+
+// while loops
+console.log("\n~~WHILE LOOP~~");
+console.log("Well, let's make them equal!");
+while (c < a) {
+  console.log (c);
+  if (c === a - 1) {
+    console.log ("Almost there!")
+  }
+  c += 1;
+}
+console.log(c);
+console.log("Finish!");
+
+// while loop in array
+console.log("\nWhile loops can be used with arrays.");
+var arrayWhile = ['Ben', 'Tom', 'Hank', 'Frank'];
+var indexWhile = 0;
+while (indexWhile < arrayWhile.length) {
+  console.log ('Person', indexWhile + 1 + ':', arrayWhile[indexWhile]);
+  indexWhile++
+} 
+
+// for loops
+// for(var; keepLoopingWhileThisIsTrue; whatHappens) -each semicolon expression is optional
+// var++ means var = var + 1
+console.log("\n~~FOR LOOP~~");
+for (d; d<=5; d++) { 
+  console.log(d);
+}
+
+// for loop in array 
+console.log("\nFor loops can be used with arrays.");
+for (var indexFor = 0; indexFor < arrayWhile.length; indexFor++) {
+  console.log('Person', indexFor + 1 + ':', arrayWhile[indexFor]);
+} 
+
+// using continue with loops -allows skipping certain iterations
+console.log("\nTom is sick today, so we won't list his name.");
+for (var indexFor = 0; indexFor < arrayWhile.length; indexFor++){
+  if (arrayWhile[indexFor] === 'Tom') {
+    continue;
+  }
+  console.log('Person', indexFor + 1 + ':', arrayWhile[indexFor]);
+} 
+
+// using break with loops -allows breaking the loop at a certain condition
+console.log("\nThe room will be full with 2 people, so the rest cannot enter.");
+for (var indexFor = 0; indexFor < arrayWhile.length; indexFor++){
+  if (indexFor + 1 > 2) {
+    break;
+  }
+  console.log('Person', indexFor + 1 + ':', arrayWhile[indexFor]);
+} 
+
+// for in loops
+// works with objects. can also be used with strings and arrays. does NOT work with numbers.
+console.log("\nFor in loops are useful to use with objects.");
+var object1 = {1: 'Uganda', 2: 'Kenya', 3: 'Ethiopia'};
+for (var keyIn in object1) {
+  console.log('Country name', keyIn + ':', object1[keyIn]);
+}
+/*Be careful! the keyIn here is changed permanently outside of the loop as well.
+  Do not use these in-loop variables elsewhere*/
+
+// nested loops
+console.log("\nNested loops are really helpful!");
+
+arrayNested = [
+  [1,2,3],
+  [4,5,6],
+  [7,8,9]
+];
+
+console.log('This is a nested array:', arrayNested);
+console.log('And we can list each item in its sub-arrays with a nested loop:');
+var text1 = "";
+for (var i1 = 0; i1 < arrayNested.length; i1++) {
+  for (var i2 = 0; i2 < arrayNested[i1].length; i2++){
+    text1 += arrayNested[i1][i2];
+  }
+}
+console.log(text1);
+
+// nested loops can be mix-matched as for and for in loops vice versa
+console.log("\nThey are even more helpful with a nested array of objects.");
+var arrayMixmatch = [
+  {name: 'Hannah', diagnosis: 'Flu', status: 'Released'},
+  {name: 'Kate', diagnosis: 'Cold', status: 'Appointment made'},
+  {name: 'Bill', diagnosis: 'Measles', status: 'Treating'}
+];
+
+console.log('This is an array objects:', arrayMixmatch);
+console.log('And we can list each patient with their information:');
+
+for (var i1 = 0; i1 < arrayMixmatch.length; i1++){
+  var patient = arrayMixmatch[i1];
+  console.log('- Patient', i1,'-');
+  for (var i2 in patient) {
+    
+    console.log(arrayMixmatch[i1][i2]);
+  }
+}
+
+// another example of nested loops, this time an object has arrays.
+console.log("\nOr we can use it for objects that have their items as arrays.");
+var objectMixmatch = {
+  'Engineering Class': ['Vanessa', 'Tim', 'Andrew'],
+  'Sociology Class': ['Brad', 'Natasha'],
+  'Hospitality Class': ['Elon', 'Mark', 'Greg', 'Anna']
+}
+console.log('This is an object of arrays:', objectMixmatch);
+console.log('And we can list each class with their students:');
+
+for (var i1 in objectMixmatch) {
+  console.log(' - ' + i1 + ' - '); // i1 becomes the key each time
+  for (var i2 = 0; i2 < objectMixmatch[i1].length; i2++){
+    console.log(objectMixmatch[i1][i2]);
+  }
+}
+
+// how to do combinations with nested loops
+console.log("\nLastly, we can see different car and color combinations.");
+arrayColor = ['Red', 'Burgundy', 'Black', 'White'];
+arrayBrand = ['Toyota', 'Mercedes', 'Hyundai'];
+for (var i1 = arrayColor.length - 1; //this is how you do reverse 
+i1 >= 0; i1--) {
+  for (var i2 = 0; i2 < arrayBrand.length; i2++) {
+    console.log ('A ' + arrayColor[i1] + ' ' + arrayBrand[i2])
+  }
+}

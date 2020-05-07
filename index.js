@@ -2,6 +2,8 @@
 
 /* multi-line
    comment
+   for testing purposes, this code will have some global variables that should normally be local variables.
+   variables that are only assigned and used in functions are local variables.
 */
 
 // this is the same as print
@@ -558,3 +560,143 @@ i1 >= 0; i1--) {
     console.log ('A ' + arrayColor[i1] + ' ' + arrayBrand[i2])
   }
 }
+
+// functions revisited
+console.log("\n~~SOME BETTER FUNCTIONS~~");
+
+arrayNumbers = [11, 12, 13, 14, 15, 16, 17, 18, 19, 121, 122, 123];
+
+console.log('Let\'s say this is our list of numbers: ' + arrayNumbers);
+
+// finding odd numbers in an array
+function findOddNumbers(array) {
+    if (array.length === 0) {
+        return [];
+    }
+    else {
+        var arrayOdd = [];
+        for (var i1 = 0; i1 < array.length; i1++) {
+            if  (array[i1] % 2 !== 0) { // keep the odd numbers by taking out the even numbers
+                arrayOdd.push(array[i1]);
+            }
+        }
+       return arrayOdd; 
+    }
+}
+
+console.log('Our odd numbers: ' + findOddNumbers(arrayNumbers));
+
+// taking a sum of all items/elements
+
+function sumNumbers(array) {
+  if (array.length === 0) {
+    return 0;
+  }
+  else {
+    var arraySum = 0;
+    for (var i1 = 0; i1 < array.length; i1++) {
+      arraySum += array[i1];
+    }
+    return arraySum;
+  }
+}
+
+console.log('Sum of all listed numbers: ' + sumNumbers(arrayNumbers));
+
+// average value of numbers
+
+function avgNumbers(array) {
+  if (array.length === 0) {
+    return 0;
+  }
+  else {
+    var avgValue = 0;
+    var numberOfNumbers = 0;
+    for (var i1 = 0; i1 < array.length; i1++, numberOfNumbers++) {
+      avgValue = (avgValue * numberOfNumbers + array[i1]) / (numberOfNumbers + 1)
+    }
+    return avgValue;
+  }
+}
+
+console.log('Average value of all listed numbers: ' + avgNumbers(arrayNumbers));
+
+// basic search by value in objects 
+
+var dictSku = {
+  '55 inch TV': 'A55RMC2',
+  '65 inch TV': 'B65UUX1',
+  '75 inch TV': 'D75AXX2'
+}
+
+var sku1 = 'D75AXX2';
+var search1 = valueSearch(dictSku, sku1);
+
+console.log('Searched SKU number:', sku1, 'Product:', search1);
+
+function valueSearch(object, target) {
+  for (var key in object) {
+    if (object[key] === target) {
+      return key;
+    } else {
+      /* if we return here, it will stop the function before completing the loop and return -1
+      we actually do not need continue here, we can simply remove the else statement, but it is here to
+      point out this common error. */
+      continue; 
+    }
+  }
+  return -1;
+}
+
+// basic search by value condition in objects
+var arrayNumbers2 = [-50, 80, 225, -33, -72, 56, 89, 10, -11];
+var numberLower = 22;
+console.log('\nThis is the list of our numbers: ' + arrayNumbers2);
+
+function lowerNumberSearch(array, lowerThan) {
+  var countLower = 0;
+  for (var i1 = 0; i1 < array.length; i1++) {
+    if (array[i1] < lowerThan) {
+      countLower++;
+    }
+  }
+  return countLower;
+}
+console.log('There are ' + lowerNumberSearch(arrayNumbers2, numberLower) + ' numbers that are lower than ' + numberLower + '.')
+
+
+// word counter - counts the number of words that are used in a string
+
+function countWords(string) {
+    if (string.length === 0) {
+        return {};
+    }
+    else {
+        var array = string.split(' ');
+
+        var object = {}
+
+        var alert = "All good!";
+
+        for (var i = 0; i < array.length; i++) {
+          
+        if (object[array[i]] === undefined) {
+          object[array[i]] = 1;
+
+          }
+        else {
+        object[array[i]] += 1;
+                                    if (object[array[i]] > 2) {
+                                        alert = 'You use the word ' + array[i] + ' too much!';
+                                        }
+        }
+        }
+        var results = [object, alert];
+        return results;
+        
+    }
+}
+
+var stringWordCount = countWords('umm you are a umm very umm clever of a person');
+console.log('\nThe words and the number of times that they were used:\n', stringWordCount[0], '\n' + stringWordCount[1]);
+

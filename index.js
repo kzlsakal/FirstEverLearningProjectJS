@@ -43,7 +43,8 @@ console.log("is 'red' equal to 'yellow':", 'red' === 'yellow');
 var a = 45;
 var b = 45;
 var c = 15;
-var d = 2
+var d = 2;
+var e = 81;
 
 // if statements
 
@@ -86,6 +87,12 @@ var result = num1 ** num2;
 return result;
 }
 console.log("2 to the 4th power:", getPower(2, 4));
+
+// square-root
+function squareRoot(num) {
+  return Math.sqrt(num);
+}
+console.log(e + "'s square root:", squareRoot(e));
 
 // modulo
 
@@ -349,6 +356,7 @@ console.log("When an array is added to another array:", arrayTogether);
 sentenceFromArray = array1.join(", ");
 console.log("This array became a string:", sentenceFromArray);
 
+
 // convert a string to an array with .split()
 var stringToBeSplit = "John: Hannah";
 arrayFromString1 = stringToBeSplit.split(": ");
@@ -432,7 +440,7 @@ console.log("Are you able to do that with a shorter code?", !determineIsAnArray(
 
 // while loops
 console.log("\n~~WHILE LOOP~~");
-console.log("Well, let's make them equal!");
+console.log("Remember that '" + c + "' was not equal to '" + a + "'? Well, let's make them equal!");
 while (c < a) {
   console.log (c);
   if (c === a - 1) {
@@ -676,7 +684,7 @@ function countWords(string) {
 
         var object = {}
 
-        var alert = "All good!";
+        var alert = "";
 
         for (var i = 0; i < array.length; i++) {
           
@@ -687,7 +695,7 @@ function countWords(string) {
         else {
         object[array[i]] += 1;
                                     if (object[array[i]] > 2) {
-                                        alert = 'You use the word ' + array[i] + ' too much!';
+                                        alert += 'You use the word ' + array[i] + ' too much! ';
                                         }
         }
         }
@@ -700,3 +708,60 @@ function countWords(string) {
 var stringWordCount = countWords('umm you are a umm very umm clever of a person');
 console.log('\nThe words and the number of times that they were used:\n', stringWordCount[0], '\n' + stringWordCount[1]);
 
+// eliminating duplicate spaces
+
+function doubleSpaceEliminator(str) {
+  var array = str.split('');
+  for (var i = 0; i < array.length; i++) {
+      if (array[i] === ' ' && array[i-1] === ' ') {
+          delete array[i];
+      }
+  }
+  var result = array.join(''); 
+  return result;
+}
+
+var stringOneSpace = doubleSpaceEliminator("\nI  originally  had  duplicate  spaces.");
+console.log(stringOneSpace);
+
+// selection of an array from an object
+
+var arraySelection = ['Coffee', 'Bread', 'Eggs'];
+var objectSelection = {'Detergent': 'Aisle 38', 'Coffee': 'Aisle 21', 'Bread': 'Aisle 3', 'Diapers': 'Aisle 48', 'Eggs': 'Aisle 5'} 
+
+function mySelection(arr, obj) {
+  var result = {};
+  for (var i = 0; i < arr.length; i++) {
+      if (obj[arr[i]] !== undefined) {
+          result[arr[i]] = obj[arr[i]];
+      }
+  }
+  return result;
+}
+
+console.log('\nWe want to buy these items: ' + arraySelection.join(', '));
+console.log('... from this catalog:', objectSelection);
+console.log(mySelection(arraySelection, objectSelection));
+
+
+// find the length of the shortest word in an array
+
+var arrayShortest = ['Paris', 'Amsterdam', 'Beijing', 'Jakarta'];
+
+function shortestItem(array) {
+  if (array.length === 0) {
+      return 0;
+  }
+  else {
+      var result = +Infinity;
+      for (var i = 0; i < array.length; i++) {
+          if (array[i].length < result) {
+              result = array[i].length;
+          }
+      }
+      return result;
+}
+}
+
+console.log('\nFinding the length of the shortest word in our list: ' + arrayShortest.join(', '));
+console.log('... the answer is:', shortestItem(arrayShortest));

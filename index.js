@@ -765,3 +765,71 @@ function shortestItem(array) {
 
 console.log('\nFinding the length of the shortest word in our list: ' + arrayShortest.join(', '));
 console.log('... the answer is:', shortestItem(arrayShortest));
+
+
+// find the odd numbers in an object's valua at a given key
+// it will also return an empty array if the array is empty, if the property is not an array, or there is no property at the given key.
+
+var objectOdd = {'some numbers': [-50, 80, 225, -33, -72, 56, 89, 10, -11]};
+
+function findOdd(obj, key) {
+  if (!Array.isArray(obj[key]) || obj[key] === undefined || obj[key][0] === undefined ) {
+      return [];
+  }
+  else {
+  var arr = [];
+  
+  for (var i = 0; i < obj[key].length; i++) {
+      if (obj[key][i] % 2 !== 0) {
+      arr.push(obj[key][i]);
+      }
+  }
+  return arr;
+}
+}
+
+console.log('\nFinding the length of the shortest word in our list:\n' + objectOdd['some numbers'].join(', '));
+console.log('Here they are:', findOdd(objectOdd, 'some numbers'));
+
+
+// joining multiple arrays in an array using concat
+/*  pay attention to the line arrNew = arrNew.concat(array[i]);
+    if only used arrNew.concat(array[i]); and returned arrNew it returns an empty array*/
+
+function concatArrays(array) {
+ var arrNew = [];
+ for (var i = 0; i < array.length; i++) {
+     arrNew = arrNew.concat(array[i]);
+ }
+ return arrNew;
+}
+console.log('\nJoining all arrays in the following array: [[1, 4], [true, false], [\'x\', \'y\']]');
+console.log(concatArrays([[1, 4], [true, false], ['x', 'y']])); 
+
+
+// taking the sum of each digit in a given number
+// it takes the first digit as a negative number is the given number is negative
+
+
+function sumofDigits(num) {
+  var result = 0;
+  var digitsString = num.toString();
+  var digitsArray = digitsString.split('');
+  if (digitsString[0] === '-') {
+    var posNeg = -1;
+    digitsArray.shift();
+     digitsArray[0] = '-' + digitsArray[0];
+  }
+  else {
+    var posNeg = 1;
+  }
+  
+  console.log(digitsArray);
+  
+  for (var i = 0; i < digitsArray.length; i++) {
+      result += Number.parseFloat(digitsArray[i]);
+  }
+  return result;
+}
+
+console.log('\nSum of each digit in 852 is:', sumofDigits(852)); 

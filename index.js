@@ -816,20 +816,77 @@ function sumofDigits(num) {
   var digitsString = num.toString();
   var digitsArray = digitsString.split('');
   if (digitsString[0] === '-') {
-    var posNeg = -1;
     digitsArray.shift();
      digitsArray[0] = '-' + digitsArray[0];
   }
-  else {
-    var posNeg = 1;
-  }
-  
-  console.log(digitsArray);
-  
+    
   for (var i = 0; i < digitsArray.length; i++) {
-      result += Number.parseFloat(digitsArray[i]);
+      result += Number(digitsArray[i]);
   }
   return result;
 }
 
 console.log('\nSum of each digit in 852 is:', sumofDigits(852)); 
+
+// Finding the shortest string in a given array with other types of items
+// It will show the first occurence in case of a tie
+
+var arrayMixed = [445, 'a string', 20, 'string', 20.5, 0.6, 'hey']
+
+function shortestString(array) {
+var result = "";
+var resultLength = +Infinity;
+
+for (var i = 0; i < array.length; i++) {
+    if (typeof array[i] === 'string' && array[i].length < resultLength) {
+        result = array[i];
+        resultLength = array[i].length;
+    }
+}
+return result;
+
+}
+
+console.log('\nThis is an array:', arrayMixed); 
+console.log('This is the shortest string in it:', shortestString(arrayMixed)); 
+
+
+// Calculating compound interest
+// This will give the generated interest amount
+/* I = P * (1 + R/N)**(N*T) - P
+   I: Interest, P: Principal, R: Nominal annual interest rate, N: Compounding Frequency, T: Length of time */
+
+function compoundInterest(principal, interestRate, frequency, timeInYears) {
+  
+ return principal * (1 + interestRate/frequency)**(frequency*timeInYears) - principal 
+  
+}
+
+console.log('\nHere is the compound interest generated for $10,000 with a quarterly compount interest rate of 4.6% over 6 years:', compoundInterest(10_000, .046, 4, 6));
+
+// replicating the modulo operator
+
+function modulo(num1, num2) {
+if (typeof num1 !== 'number' || typeof num2 !== 'number' || num2 === 0) {
+    return NaN;
+}
+else if (num1 === 0) {
+    return 0;
+}
+else if (Math.abs(num2) > Math.abs(num1)) {
+  return Math.abs(num2) * Math.abs(num1) / num1;
+}
+else {
+  result = 1;
+  while ((result * num2) + num2 <= Math.abs(num1)) {
+    result++;
+  }
+  
+  // for (var i = num2, result = 1; i + num2 <= Math.abs(num1); i = i + num2) {
+  //    result++;
+  //}
+
+}
+return Math.abs(result * Math.abs(num2) - Math.abs(num1)) * Math.abs(num1) / num1;
+}
+console.log('\n-13 % 5 =', modulo(-13, 5));

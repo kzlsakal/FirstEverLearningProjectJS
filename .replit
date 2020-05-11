@@ -1,4 +1,2 @@
-// This file can be deleted since this project is a one-file project. Keeping the file for reference & possible add-ons in the future.
-
 language = "nodejs"
 run = "node index.js"

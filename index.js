@@ -982,10 +982,10 @@ console.log("\n~~UNDERSTANDING THE TYPE OF A VARIABLE~~");
   // we use this function that checks strict equality
   function assertionEquality(actual, expected, testName) {
     if (actual === expected) {
-        console.log('passed')
+        console.log('passed');
     }
     else {
-        console.log('FAILED [' + testName + '] Expected \"' + expected + '\", but got \"' + actual + '\"')
+        console.log('FAILED [' + testName + '] Expected \"' + expected + '\", but got \"' + actual + '\"');
     }
   }
 
@@ -995,14 +995,14 @@ console.log("\n~~UNDERSTANDING THE TYPE OF A VARIABLE~~");
 
   function assertionEqualityArrays(actual, expected, testName) {
       if (actual.length !== expected.length) {
-            console.log('FAILED [' + testName + '] Expected \"' + expected + '\", but got \"' + actual + '\"')
+            console.log('FAILED [' + testName + '] Expected \"' + expected + '\", but got \"' + actual + '\"');
         }
         
       else {
           for (var i = 0; i < actual.length; i++) {
               if (!(actual[i] === expected[i])) {
             
-                  console.log('FAILED [' + testName + '] Expected \"' + expected + '\", but got \"' + actual + '\"')
+                  console.log('FAILED [' + testName + '] Expected \"' + expected + '\", but got \"' + actual + '\"');
                   break;
               }
               else if (actual[i] === actual[expected.length - 1]) {
@@ -1021,6 +1021,7 @@ console.log("\n~~UNDERSTANDING THE TYPE OF A VARIABLE~~");
 
 
 // assertion function for two objects being equal
+// also look up deep object comparison for a more accurate way of doing this
 
   function assertionEqualityObjects(actual, expected, testName) {
   if (JSON.stringify(actual) === JSON.stringify(expected)) {
@@ -1058,10 +1059,10 @@ console.log("\n~~UNDERSTANDING THE TYPE OF A VARIABLE~~");
 
   function assertion(condition, testName) {
       if (condition) {
-          console.log('passed')
+          console.log('passed');
       }
       else {
-          console.log ('FAIL ' + testName)
+          console.log ('FAIL ' + testName);
       }
   }
 
@@ -1072,3 +1073,159 @@ console.log("\n~~UNDERSTANDING THE TYPE OF A VARIABLE~~");
   assertion(cube(2) === 8, 'cube of 2 should return 8');
   assertion(cube(3) === 27, 'cube of 3 should return 27');
   assertion(cube(-3) === -27, 'cube of -3 should return -27');
+
+
+
+
+// replicating .every() high order function
+  console.log("\nReplicating .every():");
+
+  // function definition
+    function every(array, callbackFunction) {
+      var doesEveryElementMatch = true;
+
+      for (var i = 0; i < array.length; i++) {
+        doesEveryElementMatch = callbackFunction(array[i]);
+        if (doesEveryElementMatch === false) {
+          return doesEveryElementMatch;
+        }
+      }
+
+      return doesEveryElementMatch;
+  }
+
+  // assertion function
+    function assertCheckEquality (actual, expected, testName) {
+      if (actual === expected) {
+        console.log('passed');
+      }
+      else {
+        console.log ('FAILED [' + testName + ']');
+      }
+    }
+
+  // test suite
+    // functions to test every()
+    function lessThanTwenty (value) {
+      return value < 20;
+    }
+
+    function isAString (value) {
+      return typeof value === 'string';
+    }
+
+    // testing the 'true' scenario
+      var arrayTrue1 = [1, 12, 5, 7, 9];
+      var everyTrue1 = every(arrayTrue1, lessThanTwenty)
+      // below must say 'passed' if our every() function is working properly.
+      assertCheckEquality(everyTrue1, true, 'All of the values in the array are less than 20')
+
+    // testing the 'false' scenario
+      var arrayFalse1 = [1, 29, 5, 7, 19];
+      var everyFalse1 = every(arrayFalse1, function(value) { // we can define the function inside here too
+        return value < 20; 
+      })
+      // below must say 'passed' if our every() function is working properly.
+      assertCheckEquality(everyFalse1, false, 'All of the values in the array are less than 20') 
+
+    // testing the 'true' scenario 2 
+      var arrayTrue2 = ['Tom', 'Bob', 'Tim'];
+      var everyTrue2 = every(arrayTrue2, isAString)
+      // below must say 'passed' if our every() function is working properly.
+      assertCheckEquality(everyTrue2, true, 'All of the values in the array are strings')
+
+    // testing the 'false' scenario 2
+      var arrayFalse2 = ['Hank', 29, 'Brad', 'Chang'];
+      var everyFalse2 = every(arrayFalse2, isAString)
+      // below must say 'passed' if our every() function is working properly.
+      assertCheckEquality(everyFalse2, false, 'All of the values in the array are strings') 
+
+// replicating .map() high order function - examples callbackFunction
+  console.log("\nReplicating .map():");
+  // definition of functions
+    function map(array, callFunction) {
+      var arrayAssign = [];
+
+      for (var i = 0; i < array.length; i++) {
+        arrayAssign.push(callFunction(array[i]));
+      }
+
+      return arrayAssign;
+    }
+
+    function cubeAll(numbers) {
+      // will be passing a function as an argument
+      return map(numbers, function(n) {
+        return n * n * n;
+      });
+    }
+
+  // assertion function - checking array equality in this case
+    function assertCheckArrayEquality (actual, expected, testName) {
+      if (actual.length !== expected.length) {
+        console.log ('FAILED [' + testName + '] Expected ' + expected + ' got ' + actual);
+        return false;
+      }
+      else {
+        for (var i = 0; i < actual.length; i++) {
+          if (actual[i] !== expected[i]) {
+            console.log ('FAILED [' + testName + '] Expected ' + expected + ' got ' + actual);
+            return false;
+          }
+        }
+        console.log('passed');
+        return true;
+      }
+    }
+
+  // test cases
+    var arrayMap = [1, -3, 4, 2];
+    var arrayMapTrue = [1, -27, 64, 8]; 
+    var arrayMapFalse = [1, -9, 64, 8];
+
+    assertCheckArrayEquality(cubeAll(arrayMap), arrayMapTrue, 'Should return cubes of all the numbers'); // should return as passed
+    assertCheckArrayEquality(cubeAll(arrayMap), arrayMapFalse, 'This will fail if the assertion function is working properly'); // should return as failed
+
+
+// checking a function that modifies objects
+  console.log("\nConverting firstName + lastName to firstName + lastName + fullName in an object:");
+  function addFullNameProp(object) {
+    var firstName = object.firstName;
+    var lastName = object.lastName;
+
+    if (firstName && lastName) {
+      object['fullName'] = firstName + ' ' + lastName;
+    }
+
+    return object;
+  }
+
+  // assertion function will check the equality of two objects
+  function assertCheckObjectsEquality(actual, expected, testName) {
+    if (JSON.stringify(actual) === JSON.stringify(expected)) {
+      console.log('passed')
+      return true;
+    }
+    else {
+      console.log ('FAILED [' + testName + '] Expected ' + JSON.stringify(expected) + ' got ' + JSON.stringify(actual));
+      return false;
+    }
+  }
+
+
+  // test suite
+    var objectNames = {firstName: 'Hank', lastName: 'Meyers'};
+    var objectWithFullName = {firstName: 'Hank', lastName: 'Meyers', fullName: 'Hank Meyers'};
+
+    var objectNames2 = {lastName: 'Nguyen', age: 25, firstName: 'Xang'};
+    var objectWithFullName2 = {lastName: 'Nguyen', age: 25, firstName: 'Xang', fullName: 'Xang Nguyen'};
+
+    // let's make one that should NOT add the fullName property because the lastName is missing
+    var objectNames3 = {age: 25, firstName: 'Xang'};
+    var objectWithFullName3 = {age: 25, firstName: 'Xang'};    
+
+    assertCheckObjectsEquality(addFullNameProp(objectNames), objectWithFullName, 'Should return the object with fullName property added');
+
+    assertCheckObjectsEquality(addFullNameProp(objectNames2), objectWithFullName2, 'Should return the object with fullName property added');
+
+    assertCheckObjectsEquality(addFullNameProp(objectNames3), objectWithFullName3, 'Should return the original object unchanged because the firstName property is missing');

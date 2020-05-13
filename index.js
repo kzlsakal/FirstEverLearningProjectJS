@@ -926,8 +926,6 @@ console.log("\n~~UNDERSTANDING THE TYPE OF A VARIABLE~~");
   console.log('\nWe can find out if 111 is an odd number without using modulo.', oddNoModulo(111));
 
 
-
-
 // level 2 nested - converting array[array[array]] to array[object, object]
 
   var studentData = [
@@ -964,7 +962,6 @@ console.log("\n~~UNDERSTANDING THE TYPE OF A VARIABLE~~");
   console.log(array);
 
 
-
 // debugging and assertion functions
 
   console.log("\n~~DEBUGGING & ASSERTION~~");
@@ -988,7 +985,6 @@ console.log("\n~~UNDERSTANDING THE TYPE OF A VARIABLE~~");
         console.log('FAILED [' + testName + '] Expected \"' + expected + '\", but got \"' + actual + '\"');
     }
   }
-
 
 
 // assertion function for two arrays being equal
@@ -1046,7 +1042,6 @@ console.log("\n~~UNDERSTANDING THE TYPE OF A VARIABLE~~");
   console.log("\nAnd one to compare two objects:");
   assertionEqualityObjects(assertObjectActual, assertObjectExpected, "Some object function");
 
- 
 
 // writing a test suite
 
@@ -1073,8 +1068,6 @@ console.log("\n~~UNDERSTANDING THE TYPE OF A VARIABLE~~");
   assertion(cube(2) === 8, 'cube of 2 should return 8');
   assertion(cube(3) === 27, 'cube of 3 should return 27');
   assertion(cube(-3) === -27, 'cube of -3 should return -27');
-
-
 
 
 // replicating .every() high order function
@@ -1212,7 +1205,6 @@ console.log("\n~~UNDERSTANDING THE TYPE OF A VARIABLE~~");
     }
   }
 
-
   // test suite
     var objectNames = {firstName: 'Hank', lastName: 'Meyers'};
     var objectWithFullName = {firstName: 'Hank', lastName: 'Meyers', fullName: 'Hank Meyers'};
@@ -1229,3 +1221,109 @@ console.log("\n~~UNDERSTANDING THE TYPE OF A VARIABLE~~");
     assertCheckObjectsEquality(addFullNameProp(objectNames2), objectWithFullName2, 'Should return the object with fullName property added');
 
     assertCheckObjectsEquality(addFullNameProp(objectNames3), objectWithFullName3, 'Should return the original object unchanged because the firstName property is missing');
+
+
+// checking a function that converts an array of students to an array with objects which include student age properties
+  console.log("\nChecking a class list decorator function:");
+
+  // random number generator
+  function getRandomIntInclusive(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  function decorateClassListWithAges(classList) {
+
+    // creates an object for each string in the input array, with an age of 10 or 11
+    var result = []
+    for (var i = 0; i < classList.length; i++) {
+        var object = {};
+        var randomAge = getRandomIntInclusive(minAge, maxAge);
+        object.name = classList[i];
+        object.age = randomAge;
+        result.push(object);
+    }
+    // returns an array of these objects
+    return result;
+  }
+
+  // assertion function
+
+  function assertClassListEqual(actual, input, testName) {
+      if (input.length !== actual.length) {
+          console.log('FAILED [' + testName + '] expected ' + input.length + ' items but got ' + actual.length + ' of them.');
+      }
+      else {
+          for (var i = 0; i < input.length; i++) {
+            if (input[i] !== actual[i].name) {
+              console.log('FAILED [' + testName + '] expected to find the student ' + input[i] + ' but got ' + actual[i].name);
+            }
+            else if (actual[i] < minAge || actual[i] > maxAge) {
+              console.log('FAILED [' + testName + '] expected ages between ' + minAge + ' and ' + maxAge + ' but got age '+ actual[i].age + ' for the student ' + input[i]);
+            }
+          
+          }
+        console.log('passed');
+      }
+  }
+
+  // test suite
+
+  var minAge = 10;
+  var maxAge = 11;
+
+  var classArray1 = ['John', 'Jim', 'Bob', 'Brian'];
+
+  var classActual1 = decorateClassListWithAges(classArray1);
+
+  assertClassListEqual(classActual1, classArray1, 'should return a class list with literals')
+
+  console.log(classArray1);
+  console.log(classActual1);
+
+// checking if a text is an isogram, using Set and toLowerCase combined
+  console.log("\nChecking if a text is an 'isogram':");
+  function isAnIsogram(text) {
+    var result = true;
+    
+    // we will convert the text to lowercase since Set will think lowercase and uppercase characters are different values
+    var lowercaseText = text.toLowerCase()
+
+    var splitText = lowercaseText.split('');
+    
+    // dropping the duplicate entries in the array
+    var setSplitText = new Set(splitText);
+
+    // checking if the size of the set is equal to the original length of the string
+    if (setSplitText.size !== splitText.length) {
+        result = false;
+    }
+    return result;
+  }
+
+  // assertion function
+  function assertEqual3(actual, expected, testName) {
+      if (actual === expected) {
+          console.log('passed');
+      }
+      else {
+          console.log('FAILED [' + testname + '] expected ' + expected + ' got ' + actual);
+      }
+  }
+
+  // test suite
+  var stringIsogram = 'anime';
+
+  console.log('testing "' + stringIsogram + '" to return "true"');
+  assertEqual3(isAnIsogram(stringIsogram), true, 'should return true for the isogram string');
+
+  var stringNotIsogram = 'commercial';
+
+  console.log('testing "' + stringNotIsogram + '" to return "false"');
+  assertEqual3(isAnIsogram(stringNotIsogram), false, 'should return false because the string is not an isogram');
+
+    var stringNotIsogram = 'Atari';
+
+  console.log('testing "' + stringNotIsogram + '" to return "false"');
+  assertEqual3(isAnIsogram(stringNotIsogram), false, 'should return false because the string has two "a" letters, one upper-case and one lower-case.');

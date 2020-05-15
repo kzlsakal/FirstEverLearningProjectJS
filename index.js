@@ -46,6 +46,10 @@
   var d = 2;
   var e = 81;
 
+
+
+//
+
 // if statements - conditionals
 
   if (b === a) {
@@ -1327,3 +1331,95 @@ console.log("\n~~UNDERSTANDING THE TYPE OF A VARIABLE~~");
 
   console.log('testing "' + stringNotIsogram + '" to return "false"');
   assertEqual3(isAnIsogram(stringNotIsogram), false, 'should return false because the string has two "a" letters, one upper-case and one lower-case.');
+
+
+// finding the word with most repeated characters in a text
+  function maxRepeatLettersInWord(word) {
+    // Split the word into individual letters
+    var wordArray = word.split('');
+    // Get the count of each letter's repetition in the word
+    var letterObject = {};
+    for (var i = 0; i < wordArray.length; i++) {
+        if (letterObject[wordArray[i]] === undefined) {
+            letterObject[wordArray[i]] = 1;
+        }
+        else {
+            letterObject[wordArray[i]]++;
+        }
+    }
+    // Find the highest count
+    var result = 0;
+    for (j in letterObject) {
+        if (letterObject[j] > result) {
+            result = letterObject[j];
+        }
+    }
+    // Return the max repeat count of the word
+    return result;
+  }
+
+  function wordsWithMostRepeatedLetters(text) {
+    // if the argument is not a string, it should prevent the script error.
+    if (typeof text !== 'string') {
+      return 'The input is not a string';
+    }
+    var maxRepeatCount = -1;
+    var wordsWithHighestRepeatCount = '';
+
+    // Split the text into individual words (delimited space).
+    var textArray = text.split(' ');
+    
+    // Iterate for each word
+    for (var k = 0; k < textArray.length; k++) {
+    
+      var repeatCountForInstance = maxRepeatLettersInWord(textArray[k])
+
+      // If the repeat count for the word is higher than the overall max,
+      if (repeatCountForInstance > maxRepeatCount) {
+          
+        // update maxRepeatCount
+        maxRepeatCount = repeatCountForInstance;
+        // update wordsWithHighestRepeatCount
+        wordsWithHighestRepeatCount = textArray[k];
+      }
+      // If another word with the same count is found, add it.
+      else if (repeatCountForInstance === maxRepeatCount){
+        // update wordsWithHighestRepeatCount
+        wordsWithHighestRepeatCount = wordsWithHighestRepeatCount + ', ' + textArray[k];
+      }
+          
+    }
+    
+    // if there are no words to show, it should return an error message.
+    if (wordsWithHighestRepeatCount === '') {
+      return 'No words found in the text';
+    }
+    else {
+      return wordsWithHighestRepeatCount;
+    }
+    }
+
+  // assertion functions
+
+  function assertEqualRepeatedLetters(actual, expected, testName) {
+    if (actual === expected) {
+      console.log('passed');
+    }
+    else {
+      console.log('FAILED [' + testName + '] expected ' + expected + ' got ' + actual);
+    }
+  }
+
+  // test suite
+
+  var testRepeatedLettersWord1 = 'some movies have delicate spirits';
+  assertEqualRepeatedLetters(wordsWithMostRepeatedLetters(testRepeatedLettersWord1), 'delicate, spirits', 'Should show the two words with the highest count');
+
+  var testRepeatedLettersWord2 = '';
+  assertEqualRepeatedLetters(wordsWithMostRepeatedLetters(testRepeatedLettersWord2), 'No words found in the text', 'Message should indicate that the string was empty');
+
+  var testRepeatedLettersWord3 = 565565;
+  assertEqualRepeatedLetters(wordsWithMostRepeatedLetters(testRepeatedLettersWord3), 'The input is not a string', 'Message should indicate that the original input was not a string');
+
+  var testRepeatedLettersWord4 = 'mamma mia was a great movie';
+  assertEqualRepeatedLetters(wordsWithMostRepeatedLetters(testRepeatedLettersWord4), 'mamma', 'Should show one the word with the highest count');

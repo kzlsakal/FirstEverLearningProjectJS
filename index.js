@@ -1423,3 +1423,146 @@ console.log("\n~~UNDERSTANDING THE TYPE OF A VARIABLE~~");
 
   var testRepeatedLettersWord4 = 'mamma mia was a great movie';
   assertEqualRepeatedLetters(wordsWithMostRepeatedLetters(testRepeatedLettersWord4), 'mamma', 'Should show one the word with the highest count');
+
+
+// Prototype + Structures
+  console.log("\nA sample of object oriented programming:");
+
+  // create a constructor function with the first letter capitalized
+  function Food(name, type) {
+    this.name = name;
+    this.type = type;
+    this.amount = 10;
+  }
+
+  // assign a function to a property of the prototype
+  Food.prototype.eat = function(ate) {
+    this.amount -= ate;
+  }
+
+  // create a new instance of our prototype
+  var myFood = new Food('Crackers', 'Snack');
+
+  console.log('I bought a new food from the store:', myFood)
+
+  // use the prototype's method on this child
+
+  myFood.eat(2);
+  console.log("My food after I ate two crackers:", myFood);
+
+
+// show a phone number array formatted, using prototype functions.
+  // structure function
+  function PhoneNumber(numbers) {
+    this.numbers = numbers;
+  }
+
+  PhoneNumber.prototype.formatted = function() {
+    var string = '';
+    string += this.parenthesize(this.getAreaCode()) + ' ' + this.getExchangeCode() + '-' + this.getLineNumber();
+    return string;
+  };
+
+  PhoneNumber.prototype.getAreaCode = function() {
+    return this.sliceToString(0,3);
+  };
+
+  PhoneNumber.prototype.getExchangeCode = function() {
+    return this.sliceToString(3,6);
+  };
+
+  PhoneNumber.prototype.getLineNumber = function() {
+    return this.sliceToString(6,10);
+  };
+
+  PhoneNumber.prototype.parenthesize = function(string) {
+    return '(' + string + ')';
+  };
+
+  PhoneNumber.prototype.sliceToString = function(start, end) {
+    return this.numbers.slice(start, end).join('');
+  };
+
+  // test
+
+  var myPhoneNumber = new PhoneNumber([2,1,4,5,6,8,1,1,2,6]);
+  console.log('\nNew phone, who dis?', myPhoneNumber.formatted())
+
+
+// finding the longest palindromic word in a sentence
+  function longestPalindrome(sentence) {
+    //ensure the input is in valid form  
+    if (typeof sentence !== 'string') {
+      return 'Invalid sentence. Please input text without symbols or punctuation';
+    }
+    
+    // split sentence into an array of words
+    var sentenceArray = sentence.split(' ');
+
+    // collect the palindromic words from the array
+    var palindromeList = [];
+    for (var i = 0; i < sentenceArray.length; i++) {
+      if (isPalindromic(sentenceArray[i])) {
+        palindromeList.push(sentenceArray[i]);
+      }
+    }
+
+    // sort the list by the length of words
+    /* below is the .sort() function with its compare option, sorts an array from smallest to largest. */
+    palindromeList.sort(function compareStringLength(string1, string2) { return string1.length - string2.length})
+
+    // display a message if there are no palindromes in our list
+    if (palindromeList.length < 1) {
+      return 'There are no palindromes found in your sentence';
+    }
+
+    else{
+    // return the longest word in the sorted list
+    /* this will pick the last entry in case of a tie. If we want the first one instead, we can change the compare function to return string2.length - string1.length and the return of this function to palindromeList[0]*/
+    return palindromeList[palindromeList.length-1];
+    }
+  }
+
+  // reversing the string to verify if palindromic later
+  function reverseString(string) {
+  var splitString = string.split('');
+  var reversed = splitString.reverse();
+  var reversedString = reversed.join('');
+  return reversedString;
+  }
+
+  //verify if palindromic - needs to be non-case-sensitive
+  function isPalindromic(word) {
+    return word.toLowerCase() === reverseString(word).toLowerCase();
+  }
+
+  // asertion function
+  function assertEqualP(actual, expected, testName) {
+    if (actual === expected) {
+      console.log('Passed:');
+      console.log(actual);
+    }
+    else {
+      console.log('FAILED [' + testName + '] expected ' + expected + ' got ' + actual);
+    }
+  }
+
+  // testing
+
+  var palindromes1 = 'etetete novada atatatata ebebe uranus uwu';
+  var expectedPalindromeTest1 = 'atatatata';
+  var actualPalindromeTest1 = longestPalindrome(palindromes1);
+
+  assertEqualP(actualPalindromeTest1, expectedPalindromeTest1, 'Should return the longest palindrome in a sentence');
+
+  var palindromes2 = 2313;
+  var expectedPalindromeTest2 = 'Invalid sentence. Please input text without symbols or punctuation';
+  var actualPalindromeTest2 = longestPalindrome(palindromes2);
+
+  assertEqualP(actualPalindromeTest2, expectedPalindromeTest2, 'Should return an error message since the input is not a string');
+
+  var palindromes3 = 'jo 21';
+  var expectedPalindromeTest3 = 'There are no palindromes found in your sentence';
+  var actualPalindromeTest3 = longestPalindrome(palindromes3);
+
+  assertEqualP(actualPalindromeTest3, expectedPalindromeTest3, 'Should return an error message since there are no palindromes in the sentence');

@@ -47,9 +47,6 @@
   var e = 81;
 
 
-
-//
-
 // if statements - conditionals
 
   if (b === a) {
@@ -411,6 +408,21 @@
 // removing an item from an object with delete
   delete dict1["second"];
   console.log("This is what's left after removing the second item:", dict1);
+
+
+// ternary operator -- a ? y : c -- if a is true, evaluate b, otherwise evaluate c.
+  console.log("\nUsing ternary operator");
+  var stringTernary = 'boo';
+  var notStringTernary = 3232;
+  var alsoNotString = [2, 'aa', 9];
+
+  function isStringTernary(input) {
+    return (typeof input === 'string') ? input + ' is a string' : input + ' is NOT a string'
+  }
+  console.log(isStringTernary(stringTernary));
+  console.log(isStringTernary(notStringTernary));
+
+  console.log((typeof alsoNotString === 'string') ? alsoNotString + ' is a string' : alsoNotString + ' is NOT a string');
 
 
 console.log("\n~~UNDERSTANDING THE TYPE OF A VARIABLE~~");
@@ -1566,3 +1578,101 @@ console.log("\n~~UNDERSTANDING THE TYPE OF A VARIABLE~~");
   var actualPalindromeTest3 = longestPalindrome(palindromes3);
 
   assertEqualP(actualPalindromeTest3, expectedPalindromeTest3, 'Should return an error message since there are no palindromes in the sentence');
+
+
+
+
+
+// list of inventory redered to flatLine
+  console.log('\nFormatted output of an inventory');
+  function renderInventory(inventory) {
+    
+    // return error message if the input is not of the desired type
+    if (!Array.isArray(inventory)){
+      return 'Invalid inventory type'
+    } else if (inventory.length < 1) {    
+      // return error message if the input array is empty
+      return 'There are no items in the inventory'
+    }
+    
+    var renderedSuitsList = '';
+
+    // iterate over the array for the brands
+    for (var i = 0; i < inventory.length; i++) {
+
+      //assign the variable to be used in the loop for each line
+      var renderedSuitOneLine = '';
+
+      // assign the array of suit name & prices for easy calling
+      var suitsOfThisBrand = inventory[i].suits;
+
+      // iterate over the suits array in the object to bring brand name and each suit object
+      for (var j = 0; j < suitsOfThisBrand.length; j++) {
+        
+        // use a helper function to format each line
+        renderedSuitOneLine += renderSuitOneLine(inventory[i].name, suitsOfThisBrand[j].name, suitsOfThisBrand[j].price);
+
+        // iterate over each suit object to bring suit name and price
+      }
+
+      // add that 'one line' to the main string
+      renderedSuitsList += renderedSuitOneLine;
+    }
+
+    return renderedSuitsList;
+
+  }
+
+  // helper function for formatting
+  function renderSuitOneLine(brandName, suitName, price) {
+    return brandName + ', ' + suitName + ', ' + price + '\n';
+  }
+
+  // assertion function
+
+    function assertEqualSuits(actual, expected, testName) {
+      if (actual === expected) {
+        console.log('Passed [' + testName + ']');
+      }
+      else {
+        console.log('FAILED [' + testName + '] expected ' + expected + ' got ' + actual);
+      }
+    }
+
+  // test suite
+
+  var currentSuitInventory = [
+    {
+      name: 'Avaya Mersedes',
+      suits: [
+        {name: 'executive charcoal flat back ', price: 1650},
+        {name: 'signature navy flat back ', price: 1299},
+        {name: 'traveler flex tech mesh beige', price: 899},
+        {name: 'traveler flex tech mesh dark gray', price: 999}
+      ]
+    },
+    {
+      name: 'Bruno Amaretto',
+      suits: [
+        {name: 'ambassador collection dark navy plaid', price: 799},
+        {name: 'signature egyptian linen tropical beige', price: 599}
+      ]
+    }
+  ];
+
+  var incorrectTypeOfInventory = 'I have 2 black suits and one white tuxedo';
+
+  var emptyInventory = [];
+
+  var actualRenderedInventory1 = renderInventory(currentSuitInventory);
+  var expectedRenderedInventory1 = 'Avaya Mersedes, executive charcoal flat back , 1650\nAvaya Mersedes, signature navy flat back , 1299\nAvaya Mersedes, traveler flex tech mesh beige, 899\nAvaya Mersedes, traveler flex tech mesh dark gray, 999\nBruno Amaretto, ambassador collection dark navy plaid, 799\nBruno Amaretto, signature egyptian linen tropical beige, 599\n';
+  assertEqualSuits(actualRenderedInventory1, expectedRenderedInventory1, 'Should return the suits list one per line');
+
+  var actualRenderedInventory2 = renderInventory(incorrectTypeOfInventory);
+  var expectedRenderedInventory2 = 'Invalid inventory type';
+  assertEqualSuits(actualRenderedInventory2, expectedRenderedInventory2, 'Should deliver an error message for incorrect inventory format');
+
+  var actualRenderedInventory3 = renderInventory(emptyInventory);
+  var expectedRenderedInventory3 = 'There are no items in the inventory';
+  assertEqualSuits(actualRenderedInventory3, expectedRenderedInventory3, 'Should deliver an error message for empty inventory');
+

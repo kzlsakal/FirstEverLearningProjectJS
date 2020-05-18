@@ -1182,7 +1182,7 @@ console.log("\n~~UNDERSTANDING THE TYPE OF A VARIABLE~~");
             return false;
           }
         }
-        console.log('passed');
+        console.log('passed [' + testName + ']');
         return true;
       }
     }
@@ -1324,7 +1324,7 @@ console.log("\n~~UNDERSTANDING THE TYPE OF A VARIABLE~~");
           console.log('passed');
       }
       else {
-          console.log('FAILED [' + testname + '] expected ' + expected + ' got ' + actual);
+          console.log('FAILED [' + testName + '] expected ' + expected + ' got ' + actual);
       }
   }
 
@@ -1676,3 +1676,99 @@ console.log("\n~~UNDERSTANDING THE TYPE OF A VARIABLE~~");
   var expectedRenderedInventory3 = 'There are no items in the inventory';
   assertEqualSuits(actualRenderedInventory3, expectedRenderedInventory3, 'Should deliver an error message for empty inventory');
 
+
+// Problem statement: Given a string, the function should the positions of the matching letters with the greatest distance between them. For 'zdaczcdd', the answer would be [1 ,7] for the letter 'd'.
+  console.log('\nFinding the Longest Distance Between the Two Same Letters in a Word');
+
+  // function
+  function findLongestDistanceBetweenSameLetters(word) {
+    // assign an empty array to be returned later
+    var indexesWithLongestDistance = [];
+
+    // return an error message if the input type is not a string
+    if (typeof word !== 'string') {
+      return 'Invalid input type. Please enter a string.';
+    }
+
+    // change the word to case-insensitive 
+    var wordCaseInsensitive = word.toLowerCase();
+
+    // return an error message if the word contains any characters other than a-z
+    var alphaChars = 'abcdefghijklmnopqrstuvwxyz';
+    for (var h = 0; h < wordCaseInsensitive.length; h++) {
+      if (alphaChars.indexOf(wordCaseInsensitive[h]) === -1) {
+        return 'Invalid input type. Please enter one word with only alphabetical characters.';
+      }
+    }
+
+    // assign an object to keep information about each letter
+    var letterDistances = {};
+
+    // iterate each letter and record its information
+    for (var i = 0; i < wordCaseInsensitive.length; i++) {
+      // if the letter is not defined as a property in the object, place it in
+      var currentLetter = wordCaseInsensitive[i];
+      if (letterDistances[currentLetter] === undefined) {
+        letterDistances[currentLetter] = [i];
+        
+      // if the letter is defined in the object, but has only one index recorded, create the second index.
+      } else if (letterDistances[currentLetter][1] === undefined) {
+        var firstIndex = letterDistances[currentLetter][0];
+        letterDistances[currentLetter] = [firstIndex, i]
+        
+      } else {
+        // if the letter property already exists with two indexes, change the second value to the current index.
+        letterDistances[currentLetter][1] = i;
+        
+      }
+    }
+    // assign a difference variable to change if the next array has a bigger difference
+    var longestDistance = 0;
+    // iterate each property's value to find the biggest difference between the two variables in an array
+    for (j in letterDistances) {   
+      // check if there are two indexes recorded, and see if the distance is larger than the previous record
+      if (letterDistances[j].length === 2 && letterDistances[j][1] - letterDistances[j][0] > longestDistance) {
+        longestDistance = letterDistances[j][1] - letterDistances[j][0];
+        indexesWithLongestDistance = letterDistances[j];
+      }
+    }
+    // return the indexes with the longest distance
+    return indexesWithLongestDistance;
+  }
+
+  // test functions
+
+  function testLongestDistanceBetweenSameLetters() {
+    var testWord = 'zdaczcdd';
+    var expectedIndexes = [1, 7];
+    var actualIndexes = findLongestDistanceBetweenSameLetters(testWord);
+    var resultOfLongestDistanceTest = assertCheckArrayEquality(actualIndexes, expectedIndexes, 'should return the indexes with the longest distance between same letters');
+  }
+
+  function testLongestDistanceBetweenSameLettersCaseInsensitive() {
+    var testWord = 'zdAczcDD';
+    var expectedIndexes = [1, 7];
+    var actualIndexes = findLongestDistanceBetweenSameLetters(testWord);
+    var resultOfLongestDistanceTest = assertCheckArrayEquality(actualIndexes, expectedIndexes, 'should not be case sensitive');
+  }
+
+  function testLongestDistanceWithInvalidInput() {
+    var testWord = 51561;
+    var expectedError = 'Invalid input type. Please enter a string.';
+    var actualIndexes = findLongestDistanceBetweenSameLetters(testWord);
+    var resultOfLongestDistanceTest = assertCheckArrayEquality(actualIndexes, expectedError, 'should return an error message if the input is invalid');
+  }
+
+  function testLongestDistanceBetweenSameLettersIgnoreSpace() {
+    var testWord = 'a b c ac db ';
+    var expectedError = 'Invalid input type. Please enter one word with only alphabetical characters.';
+    var actualIndexes = findLongestDistanceBetweenSameLetters(testWord);
+    var resultOfLongestDistanceTest = assertCheckArrayEquality(actualIndexes, expectedError, 'should return an error message if the input is not a single word with only alphabetical characters');
+  }
+
+  // test
+
+  testLongestDistanceBetweenSameLetters()
+  testLongestDistanceBetweenSameLettersCaseInsensitive()
+  testLongestDistanceWithInvalidInput()
+  testLongestDistanceBetweenSameLettersIgnoreSpace()

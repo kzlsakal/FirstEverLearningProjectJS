@@ -1056,7 +1056,7 @@ console.log("\n~~UNDERSTANDING THE TYPE OF A VARIABLE~~");
   };
 
   console.log("\nAnd one to compare two objects:");
-  assertionEqualityObjects(assertObjectActual, assertObjectExpected, "Some object function");
+  assertionEqualityObjects(assertObjectActual, assertObjectExpected, "Some object function that should fail");
 
 
 // writing a test suite
@@ -1772,3 +1772,62 @@ console.log("\n~~UNDERSTANDING THE TYPE OF A VARIABLE~~");
   testLongestDistanceBetweenSameLettersCaseInsensitive()
   testLongestDistanceWithInvalidInput()
   testLongestDistanceBetweenSameLettersIgnoreSpace()
+
+
+
+// should we play this slot machine
+  /* problem statement: According to our player, a slot machine can be considered  
+    profitable, if the prize multiplied by the probability of winning is larger than the bet that is placed. 
+    Create a function that will return true or false based on this information. */
+
+  function decideSlotMachine(bet, prize, probability) {
+    // return an error message if any invalid input type is provided
+    if (typeof bet !== 'number' || typeof prize !== 'number' || typeof probability !== 'number') {
+      return 'Invalid input type. Please enter only numbers.';
+    }
+    
+    // create an if statement to decide if probability * prize is larger than the bet
+    if (probability * prize > bet) {
+    // return true if the statement is true
+    return true;
+    } else {
+    // return false if the slot machine is not profitable
+    return false;
+    }
+  }
+
+  // assertion function
+
+  function assertEqualBet(actual, expected, testName) {
+    if (actual === expected) {
+      return console.log('Passed [' + testName + ']'); 
+    } else {
+      return console.log('Failed [' + testName + '] expected ' + expected + ' got ' + actual);
+    }
+  }
+
+  // test suite
+
+  function testSlotDeciderInvalidInput() {
+    var actual = decideSlotMachine(2.6, 'seven', .9);
+    var expected = 'Invalid input type. Please enter only numbers.';
+    var resultOfTest = assertEqualBet(actual, expected, 'Should give an error message when the input type is invalid.');
+  }
+
+  function testSlotDeciderUnprofitable() {
+    var actual = decideSlotMachine(8, 14.1, .4);
+    var expected = false;
+    var resultOfTest = assertEqualBet(actual, expected, 'Should return false if the slot machine is unprofitable');
+  }
+
+  function testSlotDeciderProfitable() {
+    var actual = decideSlotMachine(.8, 10, .1);
+    var expected = true;
+    var resultOfTest = assertEqualBet(actual, expected, 'Should return true if the slot machine is profitable');
+  }
+
+  // execution of test suite
+  console.log('\nSimple decision-maker for slot machine profitability.');
+  testSlotDeciderInvalidInput()
+  testSlotDeciderUnprofitable()
+  testSlotDeciderProfitable()

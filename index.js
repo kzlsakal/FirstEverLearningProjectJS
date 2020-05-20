@@ -248,6 +248,10 @@
   var stringMulti = 'Aren\'t you a multiline string\nwith an apostrophe?';
   console.log(stringMulti);
 
+// interpolating variables in the strings using backtick ``
+var nameUncle = 'Bob Achtung';
+console.log(`My uncle's name is ${nameUncle}, as it is interpolated in this sentence.`);
+
 // Getting the length of a string
 
   var name1 = "Alan Boksic";
@@ -585,13 +589,30 @@ console.log("\n~~UNDERSTANDING THE TYPE OF A VARIABLE~~");
   }
 
 // functions revisited
+
   console.log("\n~~SOME BETTER FUNCTIONS~~");
 
+// using let instead of var will limit the assignment into the immediate scope only
+  // a block can be created inside a function anytime, for scoping purposes.
+  function printDrinks() {
+    let drink1 = 'Margarita';
+
+    {
+      let drink2 = 'Old Fashioned';
+      console.log(`I decided to scope into my ${drink2}, instead of ${drink1}.`);
+    }
+
+    // now if the below line was not commented out, it would give a syntax error, since drink2 is not assigned in this scope.
+    // console.log(drink2);
+  }
+
+  printDrinks()
+ 
+// finding odd numbers in an array
   arrayNumbers = [11, 12, 13, 14, 15, 16, 17, 18, 19, 121, 122, 123];
 
   console.log('Let\'s say this is our list of numbers: ' + arrayNumbers);
 
-// finding odd numbers in an array
   function findOddNumbers(array) {
       if (array.length === 0) {
           return [];
@@ -1831,3 +1852,72 @@ console.log("\n~~UNDERSTANDING THE TYPE OF A VARIABLE~~");
   testSlotDeciderInvalidInput()
   testSlotDeciderUnprofitable()
   testSlotDeciderProfitable()
+
+// binary search - divide and conquer
+  /* this method picks a midpoint in a sorted array, then decides if the searched value is less or greater than that midpoint. after that, it makes another search in the respective half of the array. it keeps dividing the array until the value is found. if the value is not found as long as the search is valid, it tells us that the value does not exist in the array. */
+
+  console.log('\nDivide and conquer with binary search');
+
+  // function
+  function searchIndex(data, value) {
+    var minimum = 0;
+    var maximum = data.length;
+    var midPoint = Math.floor(data.length / 2);
+    
+    // create a while loop for as long as the search parameters are valid
+    while (minimum <= maximum) {
+    
+      // if midpoint is equal to our desired number, return the index of it.
+      if (data[midPoint] === value) {
+        return midPoint;
+      } else if (data[midPoint] < value){
+      // if the midpoint is less than the desired number, eliminate the first half of the array.
+      minimum = midPoint + 1;
+      } else if (data[midPoint] > value) {
+      // if the midpoint is greater than the desired number, eliminate the second half of the array.
+      maximum = midPoint - 1;
+      }
+    midPoint = Math.floor((minimum + maximum) / 2);
+    }
+    // return the null if the value is not found
+    return null;
+    
+  }
+
+  // assertion function
+  function assertEqualBinary(actual, expected, testName) {
+    if (actual === expected) {
+      console.log(`Passed [${testName}]`);
+    }
+    else {
+      console.log(`FAILED [${testName}] expected ${expected} got ${actual}`);
+    }
+  }
+
+  // test suite
+
+  function testSearchIndex() {
+    var actual = searchIndex([-2, 4, 12, 40, 41, 58, 126], 58);
+    var expected = 5;
+    var testResult = assertEqualBinary(actual, expected, 'Should return the index value of the desired number');
+  }
+
+  function testSearchIndexLonger() {
+    var actual = searchIndex([5, 19, 25, 26, 27, 28, 29, 35, 41, 57], 57);
+    var expected = 9;
+    var testResult = assertEqualBinary(actual, expected, 'Should return the index value of the desired number that is at the end of a list');
+  }
+
+  function testSearchIndexNull() {
+    var actual = searchIndex([2, 5, 18, 19, 35, 48, 56], 30);
+    var expected = null;
+    var testResult = assertEqualBinary(actual, expected, 'Should return null since the number is not present in our data');
+  }
+
+  // execute the test suite
+
+  testSearchIndex() 
+  testSearchIndexLonger()
+  testSearchIndexNull()
+
+  

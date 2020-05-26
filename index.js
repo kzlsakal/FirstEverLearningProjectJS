@@ -369,7 +369,7 @@ console.log(`My uncle's name is ${nameUncle}, as it is interpolated in this sent
   console.log("Well, it also split into pieces:", arrayFromString2);
 
 
-// ocjects - dictionaries
+// objects - dictionaries
   console.log("\n~~WORKING WITH OBJECTS~~");
 
   var dict1 = {
@@ -384,7 +384,7 @@ console.log(`My uncle's name is ${nameUncle}, as it is interpolated in this sent
 // objects with functions
 
   function returnValue(object, key){
-    return object[key]; // this has to be bracket type because .key will look for the 'key entry' instead of calling the variable
+    return object[key]; // this has to be bracket type because .key will look for the 'key' property instead of calling the variable
   }
   var key1 = 'first';
   var value1 = returnValue(dict1, key1);
@@ -512,14 +512,14 @@ console.log("\n~~UNDERSTANDING THE TYPE OF A VARIABLE~~");
   } 
 
 // for in loops
-  // works with objects. can also be used with strings and arrays. does NOT work with numbers.
+  // works with objects. can also be used with strings and arrays,but frown upon. does NOT work with numbers.
   console.log("\nFor in loops are useful to use with objects.");
   var object1 = {1: 'Uganda', 2: 'Kenya', 3: 'Ethiopia'};
   for (var keyIn in object1) {
     console.log('Country name', keyIn + ':', object1[keyIn]);
   }
   /*Be careful! the keyIn here is changed permanently outside of the loop as well.
-    Do not use these in-loop variables elsewhere*/
+    Do not use global variables as in-loop variables*/
 
 // nested loops
   console.log("\nNested loops are really helpful!");
@@ -730,9 +730,11 @@ console.log("\n~~UNDERSTANDING THE TYPE OF A VARIABLE~~");
             }
           else {
           object[array[i]] += 1;
-                                      if (object[array[i]] > 2) {
-                                          alert += 'You use the word ' + array[i] + ' too much! ';
-                                          }
+
+          if (object[array[i]] > 2) {
+              alert += 'You use the word ' + array[i] + ' too much! ';
+          }
+
           }
           }
           var results = [object, alert];
@@ -926,28 +928,23 @@ console.log("\n~~UNDERSTANDING THE TYPE OF A VARIABLE~~");
 // replicating the modulo operator
 
   function modulo(num1, num2) {
-  if (typeof num1 !== 'number' || typeof num2 !== 'number' || num2 === 0) {
+    if(isNaN(num1) || isNaN(num2) || num2 === 0) {
       return NaN;
-  }
-  else if (num1 === 0) {
-      return 0;
-  }
-  else if (Math.abs(num2) > Math.abs(num1)) {
-    return Math.abs(num2) * Math.abs(num1) / num1;
-  }
-  else {
-    result = 1;
-    while ((result * num2) + num2 <= Math.abs(num1)) {
-      result++;
     }
-    
-    // for (var i = num2, result = 1; i + num2 <= Math.abs(num1); i = i + num2) {
-    //    result++;
-    //}
+    console.log(num2)
+    let abs1 = Math.abs(num1);
+    let abs2 = Math.abs(num2);
+    while (abs2 <= abs1) {
+      abs1 -= abs2;
+    }
+    if (num1 === 0) {
+      return 0;
+    } else if (num1 < 0) {
+      return -abs1;
+    }
+    return abs1;
+  }
 
-  }
-  return Math.abs(result * Math.abs(num2) - Math.abs(num1)) * Math.abs(num1) / num1;
-  }
   console.log('\n-13 % 5 =', modulo(-13, 5));
 
   function oddNoModulo(num) {
@@ -1005,7 +1002,7 @@ console.log("\n~~UNDERSTANDING THE TYPE OF A VARIABLE~~");
 
   // here is our function
   function timesTwo(n) {
-    return n * 3;
+    return n * 2;
   }
 
   // here we start debugging
